@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exercicio fixacao</title>
+
+    <style type="text/css">
+        .azul {
+            margin: 10px 0;
+
+        }
+
+        .azulzinho {
+            padding: 20px;
+
+        }
+
+        .botaoContato {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+        }
+
+        .localNum {
+            margin-left: 5px;
+        }
+
+        .contato {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+
+        }
+
+        .botaoExcluir {
+            background-color: red;
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="azulzinho" style="background-color: lightblue;">
+        <label class="contato">Contatos</label>
+        <div class="envolveAzul">
+
+        </div>
+        <input type="button" class="botaoContato" onclick="criaContato(event)" value="Novo">
+    </div>
+
+    <script>
+
+
+
+        var tamanhoAzul = document.getElementsByClassName('azulzinho').length;
+        function sizeOfThings() {
+
+            var windowWidth = window.innerWidth;
+            var windowHeight = window.innerHeight;
+            for (let i = 0; i < tamanhoAzul; i++) {
+                var minhaDiv = document.getElementsByClassName('azulzinho')[i]
+
+                var ajuda = "px"
+
+                var aux = (windowWidth / 5) / 2;
+                minhaDiv.style.width = '550px';
+
+                minhaDiv.style.position = 'relative';
+                minhaDiv.style.top = '40px';
+                minhaDiv.style.left = (windowWidth / 2 - aux) + ajuda;
+            }
+        };
+
+        sizeOfThings();
+
+        window.addEventListener('resize', function () {
+            sizeOfThings();
+        });
+
+        var primeiraVez = 1
+
+        criaContato()
+        function criaContato(evt) {
+            var tamanhoLista = parseInt(document.getElementsByClassName('azul').length)
+            let ultimoInputNome = document.getElementsByClassName('localInputNome').length - 1
+            var inputDoNome = document.getElementsByClassName('localInputNome')[ultimoInputNome]
+            var inputDoNum = document.getElementsByClassName('localInputNum')[ultimoInputNome]
+
+
+            if (primeiraVez == 1 || (inputDoNome.value.trim() != "" && inputDoNum.value.trim() != "")) {
+                //criando elementos html 
+                var divAzul = document.createElement('div')
+                var lableN = document.createElement('label')
+                var inputN = document.createElement('input')
+                var labelNum = document.createElement('label')
+                var inputNum = document.createElement('input')
+
+
+                if (primeiraVez == 2) {
+
+                    var botaoExc = document.createElement('input')
+                    botaoExc.setAttribute('type', 'button')
+                    botaoExc.value = "X"
+                    botaoExc.setAttribute('class', 'botaoExcluir')
+
+                    botaoExc.setAttribute('onclick', 'excluiDiv(this.parentElement.parentElement, this.parentElement,' + tamanhoLista + ')')
+                    document.getElementsByClassName('azul')[ultimoInputNome].append(botaoExc)
+                    primeiraVez--
+                }
+                //setando atributos
+                divAzul.setAttribute('class', 'azul')
+                lableN.setAttribute('class', 'localNome')
+                inputN.setAttribute('class', 'localInputNome')
+                inputN.setAttribute('type', 'text')
+                inputN.maxLength = "20"
+                labelNum.setAttribute('class', 'localNum')
+                inputNum.setAttribute('class', 'localInputNum')
+                inputNum.setAttribute('type', 'text')
+
+                lableN.innerHTML = "Nome:"
+                labelNum.innerHTML = "Numero:"
+                //adicionando ao html pelo append
+                divAzul.append(lableN)
+                divAzul.append(inputN)
+                divAzul.append(labelNum)
+                divAzul.append(inputNum)
+
+                var divPai = document.querySelector('.envolveAzul')
+
+                divPai.append(divAzul)
+                primeiraVez++
+                nVazio = 0
+
+            } else {
+                alert("Nao e possivel...")
+            }
+            console.log(tamanhoLista)
+        }
+
+        function excluiDiv(divAvo, divPai, controleExcluir) {
+            //se tamanho da div azul(div que armazena os labels e inputs) <= 1
+            if (controleExcluir <= 1) {
+                alert("Nao e possivel deixar a lista vazia")
+            } else {
+                divAvo.removeChild(divPai)
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
